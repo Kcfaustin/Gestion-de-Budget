@@ -1269,6 +1269,27 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
 }
+
+// iOS install hint
+const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+const isInStandaloneMode = window.navigator.standalone;
+if (isIos && !isInStandaloneMode) {
+  const iosBanner = document.createElement('div');
+  iosBanner.style.cssText = `
+    position:fixed; bottom:0; left:0; right:0;
+    background:#15151f; border-top:1px solid #1e1e30;
+    padding:16px 20px; text-align:center;
+    font-family:'Space Grotesk',sans-serif; font-size:13px;
+    color:#e8e8f5; z-index:9999; display:flex;
+    align-items:center; justify-content:space-between; gap:12px;
+  `;
+  iosBanner.innerHTML = `
+    <span>📲 Pour installer : appuie sur <strong>⬆ Partager</strong> → <strong>Sur l'écran d'accueil</strong></span>
+    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#5a5a7a;font-size:20px;cursor:pointer">✕</button>
+  `;
+  document.body.appendChild(iosBanner);
+}
 </script>
+
 </body>
 </html>
