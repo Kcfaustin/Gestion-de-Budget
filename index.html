@@ -9,8 +9,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="BudgetSplit"/>
 <title>BudgetSplit</title>
+<link rel="icon" type="image/svg+xml" href="icon-192.svg"/>
+<link rel="shortcut icon" href="icon-192.svg"/>
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.svg"/>
 <link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="icon-192.svg"/>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
@@ -35,7 +37,7 @@
 }
 
   /* LIGHT MODE */
-  body.light {
+body.light {
   --bg: #f7f7ff;
   --surface: #ffffff;
   --surface2: #ededfa;
@@ -48,7 +50,10 @@
   --green: #059669;
   --yellow: #d97706;
   --red: #dc2626;
-} 
+  --pink: #db2777;
+  --blue: #2563eb;
+  --orange: #ea580c;
+}
 
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
@@ -292,11 +297,12 @@
     cursor: pointer;
     transition: all 0.2s;
     margin-top: 10px;
+    color: var(--text);  /* ← ajoute ça */
   }
   .recurring-chip.active {
     background: rgba(99,102,241,0.15);
     border-color: var(--accent);
-    color: var(--accent2);
+    color: var(--text);  /* ← texte toujours lisible en sombre et clair */
   }
 
   .recurring-list {
@@ -1256,6 +1262,27 @@ function renderSplitRow(c) {
   `;
 }
 
+function triggerInstall() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(({ outcome }) => {
+      deferredPrompt = null;
+      if (outcome === 'accepted') toast('🎉 App installée !');
+    });
+  } else {
+    // Fallback manuel clair selon le navigateur
+    const isSamsung = /SamsungBrowser/i.test(navigator.userAgent);
+    const isChrome = /Chrome/i.test(navigator.userAgent) && !/SamsungBrowser/i.test(navigator.userAgent);
+    if (isSamsung) {
+      toast('📲 Menu ⋮ → "Ajouter page à" → "Écran d\'accueil"');
+    } else if (isChrome) {
+      toast('📲 Menu ⋮ → "Ajouter à l\'écran d\'accueil"');
+    } else {
+      toast('📲 Menu du navigateur → "Ajouter à l\'écran d\'accueil"');
+    }
+  }
+}
+
 function renderSplits() {
   const parsed = parseIncome();
   const list = document.getElementById('splits-list');
@@ -1718,6 +1745,11 @@ function exportPDF() {
 function renderSettings() {
   const t = total();
   return `
+    <button class="ghost-btn" id="install-btn-settings" onclick="triggerInstall()" 
+      style="border-color:var(--accent)44;color:var(--accent2);margin-bottom:4px">
+      📲 Installer l'application
+    </button>
+
     <div class="card">
       <div class="card-label">Devise</div>
       <select class="styled-select" onchange="state.currency=this.value;save();render()">
