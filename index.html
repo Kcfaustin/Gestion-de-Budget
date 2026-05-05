@@ -34,6 +34,17 @@
     --mono: 'JetBrains Mono', monospace;
   }
 
+  /* LIGHT MODE */
+  body.light {
+    --bg: #f0f0f8;
+    --surface: #ffffff;
+    --surface2: #e8e8f5;
+    --border: #d0d0e8;
+    --border2: #c0c0d8;
+    --text: #18182a;
+    --muted: #8888aa;
+  }
+
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   body {
@@ -44,6 +55,7 @@
     display: flex;
     justify-content: center;
     overscroll-behavior: none;
+    transition: background 0.3s, color 0.3s;
   }
 
   #app {
@@ -56,7 +68,6 @@
     overflow: hidden;
   }
 
-  /* ── GLOW BG ── */
   .bg-glow {
     position: fixed;
     top: -120px; left: 50%;
@@ -67,12 +78,16 @@
     z-index: 0;
   }
 
-  /* ── HEADER ── */
   header {
     padding: 52px 24px 20px;
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
   }
+
+  .header-left {}
 
   .header-label {
     font-family: var(--mono);
@@ -93,7 +108,27 @@
     background-clip: text;
   }
 
-  /* ── TABS ── */
+  body.light .header-title {
+    background: linear-gradient(135deg, #18182a 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* THEME TOGGLE */
+  .theme-toggle {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:active { transform: scale(0.9); }
+
   .tabs {
     display: flex;
     padding: 0 16px;
@@ -128,7 +163,6 @@
 
   .tab-icon { font-size: 18px; }
 
-  /* ── SCROLL CONTENT ── */
   .content {
     flex: 1;
     overflow-y: auto;
@@ -138,7 +172,6 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ── CARDS ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -156,7 +189,6 @@
     margin-bottom: 14px;
   }
 
-  /* ── INPUT GROUP ── */
   .input-row {
     display: flex;
     gap: 10px;
@@ -201,6 +233,12 @@
     pointer-events: none;
   }
 
+  body.light .currency-badge {
+    background: var(--surface2);
+    border-color: var(--border);
+    color: var(--accent);
+  }
+
   .submit-btn {
     background: linear-gradient(135deg, var(--accent), #8b5cf6);
     border: none;
@@ -217,7 +255,73 @@
   .submit-btn:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; }
   .submit-btn:not(:disabled):active { transform: scale(0.95); }
 
-  /* ── SPLIT ROWS ── */
+  /* NOTE INPUT */
+  .note-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 13px;
+    outline: none;
+    margin-top: 10px;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .note-input:focus { border-color: var(--accent); }
+  .note-input::placeholder { color: var(--muted); }
+
+  /* RECURRING */
+  .recurring-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+  }
+  .recurring-chip.active {
+    background: rgba(99,102,241,0.15);
+    border-color: var(--accent);
+    color: var(--accent2);
+  }
+
+  .recurring-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .recurring-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .recurring-item:hover { border-color: var(--accent); }
+
+  .recurring-item .ri-info { flex: 1; }
+  .recurring-item .ri-name { font-size: 13px; font-weight: 600; }
+  .recurring-item .ri-amount { font-family: var(--mono); font-size: 12px; color: var(--green); }
+  .recurring-item .ri-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .recurring-item .ri-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; opacity: 0.5; transition: opacity 0.2s; }
+  .recurring-item .ri-del:hover { opacity: 1; color: var(--red); }
+
+  /* SPLIT ROWS */
   .split-row {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -282,7 +386,7 @@
     margin-top: 2px;
   }
 
-  /* ── SAVINGS GOAL ── */
+  /* GOAL */
   .goal-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -295,7 +399,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .goal-name {
@@ -334,7 +438,14 @@
     text-align: right;
   }
 
-  /* ── CHART ── */
+  .goal-deadline {
+    font-size: 11px;
+    color: var(--yellow);
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+
+  /* CHART */
   .chart-wrap {
     display: flex;
     align-items: center;
@@ -360,7 +471,73 @@
     flex-shrink: 0;
   }
 
-  /* ── SETTINGS ── */
+  /* BAR CHART */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 120px;
+    padding: 0 4px;
+    margin-bottom: 8px;
+  }
+
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+    justify-content: flex-end;
+    cursor: pointer;
+  }
+
+  .bar-fill {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    transition: height 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    background: linear-gradient(180deg, var(--accent), #8b5cf6);
+    min-height: 4px;
+  }
+
+  .bar-fill.current { background: linear-gradient(180deg, var(--green), #34d399aa); }
+
+  .bar-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .bar-val {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text);
+    text-align: center;
+  }
+
+  /* PROJECTION */
+  .projection-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(52,211,153,0.05));
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+
+  .projection-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .projection-row:last-child { border-bottom: none; }
+  .projection-val { font-family: var(--mono); font-weight: 700; color: var(--green); }
+
+  /* SETTINGS */
   .setting-row {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -414,7 +591,6 @@
     outline: none;
   }
 
-  /* ── SELECT ── */
   .styled-select {
     width: 100%;
     background: var(--bg);
@@ -429,7 +605,6 @@
     appearance: none;
   }
 
-  /* ── TOTAL PILL ── */
   .total-pill {
     border-radius: 12px;
     padding: 14px 18px;
@@ -443,7 +618,9 @@
   .total-pill.ok { background:#0d2b1a; border:1px solid #22c55e44; }
   .total-pill.bad { background:#2b0d0d; border:1px solid #f8717144; }
 
-  /* ── RESET BTN ── */
+  body.light .total-pill.ok { background:#d1fae5; border-color:#22c55e66; }
+  body.light .total-pill.bad { background:#fee2e2; border-color:#f8717166; }
+
   .ghost-btn {
     width: 100%;
     padding: 12px;
@@ -457,11 +634,12 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s;
+    margin-bottom: 8px;
   }
 
   .ghost-btn:hover { border-color: var(--accent); color: var(--text); }
 
-  /* ── HISTORY ── */
+  /* HISTORY */
   .history-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -483,6 +661,16 @@
     font-family: var(--mono);
     font-size: 11px;
     color: var(--muted);
+  }
+
+  .history-note-tag {
+    font-size: 11px;
+    color: var(--accent2);
+    margin-top: 3px;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .history-total {
@@ -522,7 +710,94 @@
 
   .history-delete:hover { opacity: 1; color: var(--red); }
 
-  /* ── GOALS FORM ── */
+  /* EDIT MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 500;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+
+  .modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 22px 22px 0 0;
+    padding: 24px 20px 40px;
+    width: 100%;
+    max-width: 480px;
+    animation: slideUp2 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes slideUp2 {
+    from { transform: translateY(100px); opacity:0 }
+    to { transform: translateY(0); opacity:1 }
+  }
+
+  .modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-close {
+    background: none; border: none; color: var(--muted);
+    font-size: 20px; cursor: pointer;
+  }
+
+  .modal-field {
+    margin-bottom: 12px;
+  }
+
+  .modal-field label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .modal-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  .modal-input:focus { border-color: var(--accent); }
+
+  .modal-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+
+  /* GOAL FORM */
   .goal-form {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
@@ -561,7 +836,6 @@
 
   .add-btn:active { transform: scale(0.9); }
 
-  /* ── EXPORT ── */
   .export-btn {
     display: flex;
     align-items: center;
@@ -583,7 +857,6 @@
 
   .export-btn:hover { border-color: var(--accent); }
 
-  /* ── INSTALL BANNER ── */
   #install-banner {
     position: fixed;
     bottom: 80px;
@@ -599,11 +872,11 @@
     box-shadow: 0 8px 32px rgba(99,102,241,0.4);
     max-width: 440px;
     width: calc(100% - 32px);
-    animation: slideUp 0.4s ease;
+    animation: slideUp3 0.4s ease;
     display: none;
   }
 
-  @keyframes slideUp {
+  @keyframes slideUp3 {
     from { transform: translateX(-50%) translateY(20px); opacity:0; }
     to { transform: translateX(-50%) translateY(0); opacity:1; }
   }
@@ -612,7 +885,6 @@
   #install-banner .inst-close { background:none; border:none; color:white; font-size:18px; cursor:pointer; opacity:0.7; }
   #install-banner .inst-go { background:white; color:var(--accent); border:none; border-radius:8px; padding:6px 14px; font-family:var(--font); font-size:12px; font-weight:700; cursor:pointer; }
 
-  /* ── BOTTOM NAV ── */
   .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -629,7 +901,10 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* ── EMPTY STATE ── */
+  body.light .bottom-nav {
+    background: rgba(240,240,248,0.92);
+  }
+
   .empty {
     text-align: center;
     padding: 60px 20px;
@@ -639,7 +914,6 @@
   .empty-icon { font-size: 48px; margin-bottom: 12px; }
   .empty-text { font-size: 14px; }
 
-  /* ── TOAST ── */
   #toast {
     position: fixed;
     bottom: 100px;
@@ -663,7 +937,6 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* ── MONTHLY SUMMARY ── */
   .month-header {
     font-family: var(--mono);
     font-size: 11px;
@@ -684,6 +957,40 @@
     font-size: 13px;
   }
 
+  /* SOLDE DISPO */
+  .balance-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .balance-row:last-child { border-bottom: none; }
+  .balance-spent {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--red);
+  }
+  .balance-left {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .spend-btn {
+    background: none;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .spend-btn:hover { border-color: var(--red); color: var(--red); }
+
   .scroll-hidden::-webkit-scrollbar { display: none; }
   .scroll-hidden { scrollbar-width: none; }
 </style>
@@ -692,8 +999,11 @@
 <div class="bg-glow"></div>
 <div id="app">
   <header>
-    <div class="header-label">Gestionnaire financier</div>
-    <div class="header-title">💰 BudgetSplit</div>
+    <div class="header-left">
+      <div class="header-label">Gestionnaire financier</div>
+      <div class="header-title">💰 BudgetSplit</div>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">🌙</button>
   </header>
 
   <div class="tabs" id="tabs"></div>
@@ -709,6 +1019,7 @@
 </div>
 
 <div id="toast"></div>
+<div id="modal-root"></div>
 
 <script>
 // ═══════════════════════════════════════════
@@ -731,7 +1042,10 @@ const CURRENCIES = [
 let state = {
   tab: 'home',
   currency: 'XOF',
+  theme: 'dark',
   income: '',
+  incomeNote: '',
+  isRecurring: false,
   categories: [
     { id:1, emoji:'🏠', name:'Vie quotidienne', pct:30, color:COLORS[0] },
     { id:2, emoji:'💼', name:'Opérationnel', pct:30, color:COLORS[1] },
@@ -741,25 +1055,31 @@ let state = {
   ],
   history: [],
   goals: [],
-  goalForm: { name:'', target:'' },
+  goalForm: { name:'', target:'', deadline:'' },
+  recurringIncomes: [],
+  // spending tracking per entry category
 };
 
-// Load from localStorage
 try {
-  const saved = localStorage.getItem('budgetsplit_state');
+  const saved = localStorage.getItem('budgetsplit_v2');
   if (saved) {
     const parsed = JSON.parse(saved);
-    state = { ...state, ...parsed, tab:'home', income:'' };
+    state = { ...state, ...parsed, tab:'home', income:'', incomeNote:'', isRecurring:false };
   }
 } catch(e) {}
 
+// Apply theme on load
+if (state.theme === 'light') document.body.classList.add('light');
+
 function save() {
   try {
-    localStorage.setItem('budgetsplit_state', JSON.stringify({
+    localStorage.setItem('budgetsplit_v2', JSON.stringify({
       currency: state.currency,
+      theme: state.theme,
       categories: state.categories,
       history: state.history,
       goals: state.goals,
+      recurringIncomes: state.recurringIncomes || [],
     }));
   } catch(e) {}
 }
@@ -783,7 +1103,7 @@ function total() {
 }
 
 function parseIncome() {
-  return parseFloat(state.income.replace(',','.')) || 0;
+  return parseFloat((state.income || '').replace(',','.')) || 0;
 }
 
 function toast(msg) {
@@ -803,10 +1123,18 @@ function groupByMonth(history) {
   return groups;
 }
 
+function toggleTheme() {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  document.body.classList.toggle('light', state.theme === 'light');
+  document.getElementById('theme-toggle').textContent = state.theme === 'dark' ? '🌙' : '☀️';
+  save();
+}
+
 // ═══════════════════════════════════════════
 // RENDER
 // ═══════════════════════════════════════════
 function render() {
+  document.getElementById('theme-toggle').textContent = state.theme === 'dark' ? '🌙' : '☀️';
   renderTabs();
   renderContent();
 }
@@ -814,7 +1142,7 @@ function render() {
 function renderTabs() {
   const tabs = [
     { id:'home', icon:'🏠', label:'Accueil' },
-    { id:'chart', icon:'📊', label:'Graphique' },
+    { id:'chart', icon:'📊', label:'Stats' },
     { id:'goals', icon:'🎯', label:'Objectifs' },
     { id:'history', icon:'📋', label:'Historique' },
     { id:'settings', icon:'⚙️', label:'Paramètres' },
@@ -841,7 +1169,7 @@ function renderContent() {
   else if (state.tab === 'history') c.innerHTML = renderHistory();
   else if (state.tab === 'settings') c.innerHTML = renderSettings();
 
-  if (state.tab === 'chart') drawPie();
+  if (state.tab === 'chart') { drawPie(); drawBarChart(); }
 }
 
 // ── HOME ──
@@ -853,17 +1181,45 @@ function renderHome() {
     montant: parsed ? (parsed * c.pct / 100) : null
   }));
 
+  const recs = (state.recurringIncomes || []);
+
   return `
+    ${recs.length > 0 ? `
+    <div class="card">
+      <div class="card-label">Revenus récurrents</div>
+      <div class="recurring-list">
+        ${recs.map((r,i) => `
+          <div class="recurring-item" onclick="loadRecurring(${i})">
+            <div style="font-size:20px">🔄</div>
+            <div class="ri-info">
+              <div class="ri-name">${r.name}</div>
+              <div class="ri-amount">${fmt(r.amount)}</div>
+              ${r.note ? `<div class="ri-note">${r.note}</div>` : ''}
+            </div>
+            <button class="ri-del" onclick="deleteRecurring(event,${i})">✕</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ` : ''}
+
     <div class="card">
       <div class="card-label">Montant reçu</div>
       <div class="input-row">
         <div class="input-wrap">
           <input class="main-input" type="number" placeholder="0" value="${state.income}"
-            oninput="state.income=this.value; renderSplits(${JSON.stringify(state.categories).replace(/"/g,'&quot;')})"
+            oninput="state.income=this.value; renderSplits()"
             id="income-input"/>
           <span class="currency-badge">${curSymbol()}</span>
         </div>
         <button class="submit-btn" ${!parsed||!ok?'disabled':''} onclick="addEntry()">✓</button>
+      </div>
+      <textarea class="note-input" placeholder="📝 Note (ex: Salaire avril, Freelance client X...)" rows="2"
+        oninput="state.incomeNote=this.value">${state.incomeNote||''}</textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;align-items:center;">
+        <button class="recurring-chip ${state.isRecurring?'active':''}" onclick="state.isRecurring=!state.isRecurring;render()">
+          🔄 ${state.isRecurring ? 'Récurrent activé' : 'Marquer comme récurrent'}
+        </button>
       </div>
       ${!ok ? `<div style="margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--red)">⚠ Total = ${total()}% (doit être 100%)</div>` : ''}
     </div>
@@ -894,7 +1250,7 @@ function renderSplitRow(c) {
   `;
 }
 
-function renderSplits(cats) {
+function renderSplits() {
   const parsed = parseIncome();
   const list = document.getElementById('splits-list');
   if (!list) return;
@@ -903,19 +1259,54 @@ function renderSplits(cats) {
     montant: parsed ? (parsed * c.pct / 100) : null
   }));
   list.innerHTML = splits.map(renderSplitRow).join('');
+  const btn = document.querySelector('.submit-btn');
+  if (btn) btn.disabled = !parsed || total() !== 100;
+}
+
+function loadRecurring(i) {
+  const r = state.recurringIncomes[i];
+  state.income = String(r.amount);
+  state.incomeNote = r.note || '';
+  render();
+  toast('🔄 Revenu récurrent chargé !');
+}
+
+function deleteRecurring(e, i) {
+  e.stopPropagation();
+  state.recurringIncomes.splice(i, 1);
+  save();
+  render();
+  toast('🗑 Récurrent supprimé');
 }
 
 function addEntry() {
   const parsed = parseIncome();
   if (!parsed || total() !== 100) return;
   const now = new Date();
+
+  // Save as recurring if flagged
+  if (state.isRecurring && state.incomeNote.trim()) {
+    const exists = (state.recurringIncomes || []).find(r => r.name === state.incomeNote.trim());
+    if (!exists) {
+      if (!state.recurringIncomes) state.recurringIncomes = [];
+      state.recurringIncomes.push({
+        name: state.incomeNote.trim(),
+        amount: parsed,
+        note: ''
+      });
+      toast('🔄 Revenu récurrent enregistré !');
+    }
+  }
+
   const entry = {
     id: Date.now(),
     amount: parsed,
+    note: state.incomeNote.trim(),
     date: now.toLocaleDateString('fr-FR'),
     monthKey: now.toLocaleDateString('fr-FR', { month:'long', year:'numeric' }),
-    splits: state.categories.map(c => ({ ...c, montant: parsed * c.pct / 100 })),
+    splits: state.categories.map(c => ({ ...c, montant: parsed * c.pct / 100, spent: 0 })),
   };
+
   // Add to savings goals
   state.goals = state.goals.map(g => {
     const savingsCat = state.categories.find(c => c.name.toLowerCase().includes('épargne') || c.emoji === '🏦');
@@ -925,8 +1316,11 @@ function addEntry() {
     }
     return g;
   });
+
   state.history = [entry, ...state.history];
   state.income = '';
+  state.incomeNote = '';
+  state.isRecurring = false;
   save();
   toast('✅ Entrée enregistrée !');
   render();
@@ -934,6 +1328,16 @@ function addEntry() {
 
 // ── CHART ──
 function renderChart() {
+  const months = Object.keys(groupByMonth(state.history)).slice(0, 6).reverse();
+  const monthGroups = groupByMonth(state.history);
+  const hasData = state.history.length > 0;
+
+  // Projection (average last 3 months * 12)
+  const last3 = Object.values(groupByMonth(state.history)).slice(0,3);
+  const avgMonthly = last3.length > 0 ? last3.reduce((s,m) => s + m.reduce((ss,e) => ss+e.amount,0), 0) / last3.length : 0;
+  const savingsCat = state.categories.find(c => c.name.toLowerCase().includes('épargne') || c.emoji === '🏦');
+  const savingsPct = savingsCat ? savingsCat.pct / 100 : 0;
+
   return `
     <div class="card">
       <div class="card-label">Répartition</div>
@@ -951,7 +1355,21 @@ function renderChart() {
       </div>
     </div>
 
-    ${state.history.length > 0 ? `
+    ${hasData ? `
+    <div class="card">
+      <div class="card-label">Revenus par mois</div>
+      <div class="bar-chart" id="bar-chart">
+        ${months.map((m, idx) => {
+          const total = (monthGroups[m] || []).reduce((s,e)=>s+e.amount,0);
+          return `<div class="bar-col" title="${m}: ${fmt(total)}">
+            <div class="bar-val" style="font-size:9px;color:var(--muted)">&nbsp;</div>
+            <div class="bar-fill ${idx===months.length-1?'current':''}" id="bar-${idx}" style="height:4px" data-val="${total}" data-max="0"></div>
+            <div class="bar-label">${m.split(' ')[0].substring(0,3)}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-label">Total par catégorie</div>
       ${state.categories.map(c => {
@@ -977,6 +1395,24 @@ function renderChart() {
         `;
       }).join('')}
     </div>
+
+    ${avgMonthly > 0 ? `
+    <div class="projection-card">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px">Projection annuelle</div>
+      <div class="projection-row">
+        <span>Revenu moyen/mois</span>
+        <span class="projection-val">${fmt(Math.round(avgMonthly))}</span>
+      </div>
+      <div class="projection-row">
+        <span>Revenus estimés sur 12 mois</span>
+        <span class="projection-val">${fmt(Math.round(avgMonthly * 12))}</span>
+      </div>
+      ${savingsPct > 0 ? `
+      <div class="projection-row">
+        <span>Épargne estimée sur 12 mois</span>
+        <span class="projection-val" style="color:var(--green)">${fmt(Math.round(avgMonthly * 12 * savingsPct))}</span>
+      </div>` : ''}
+    </div>` : ''}
     ` : `<div class="empty"><div class="empty-icon">📊</div><div class="empty-text">Ajoute des entrées pour voir les stats</div></div>`}
   `;
 }
@@ -1001,18 +1437,28 @@ function drawPie() {
     angle += slice;
   });
 
-  // Donut hole
+  const bgColor = state.theme === 'light' ? '#ffffff' : '#080810';
   ctx.beginPath();
   ctx.arc(cx, cy, inner, 0, Math.PI * 2);
-  ctx.fillStyle = '#080810';
+  ctx.fillStyle = bgColor;
   ctx.fill();
 
-  // Center text
-  ctx.fillStyle = '#e8e8f5';
+  ctx.fillStyle = state.theme === 'light' ? '#18182a' : '#e8e8f5';
   ctx.font = 'bold 14px JetBrains Mono, monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('100%', cx, cy);
+}
+
+function drawBarChart() {
+  const bars = document.querySelectorAll('.bar-fill[data-val]');
+  if (!bars.length) return;
+  const vals = Array.from(bars).map(b => parseFloat(b.dataset.val) || 0);
+  const max = Math.max(...vals, 1);
+  bars.forEach(b => {
+    const h = Math.max(4, (parseFloat(b.dataset.val) / max) * 100);
+    setTimeout(() => { b.style.height = h + 'px'; }, 100);
+  });
 }
 
 // ── GOALS ──
@@ -1024,6 +1470,25 @@ function renderGoals() {
       ${state.goals.map((g, i) => {
         const pct = Math.min(100, g.target > 0 ? (g.current / g.target * 100) : 0);
         const done = pct >= 100;
+        let deadlineText = '';
+        if (g.deadline && !done) {
+          const today = new Date();
+          const dl = new Date(g.deadline);
+          const diffDays = Math.ceil((dl - today) / (1000*60*60*24));
+          const monthlySavings = (() => {
+            const last3 = Object.values(groupByMonth(state.history)).slice(0,3);
+            const avg = last3.length > 0 ? last3.reduce((s,m) => s + m.reduce((ss,e) => ss+e.amount,0), 0) / last3.length : 0;
+            const sp = state.categories.find(c => c.name.toLowerCase().includes('épargne') || c.emoji === '🏦');
+            return sp ? avg * sp.pct / 100 : 0;
+          })();
+          const remaining = g.target - g.current;
+          const monthsNeeded = monthlySavings > 0 ? Math.ceil(remaining / monthlySavings) : null;
+          if (diffDays > 0) {
+            deadlineText = `📅 Échéance dans ${diffDays} jour${diffDays>1?'s':''} · ${monthsNeeded ? `~${monthsNeeded} mois nécessaires` : 'Ajoute des revenus pour estimer'}`;
+          } else {
+            deadlineText = `⚠️ Échéance dépassée`;
+          }
+        }
         return `
           <div class="goal-card">
             <div class="goal-header">
@@ -1037,15 +1502,20 @@ function renderGoals() {
               <div class="goal-bar-fill" style="width:${pct}%;${done?'background:var(--green)':''}"></div>
             </div>
             <div class="goal-pct" style="color:${done?'var(--green)':'var(--muted)'}">${pct.toFixed(0)}% ${done?'✅ Atteint !':''}</div>
+            ${deadlineText ? `<div class="goal-deadline">${deadlineText}</div>` : ''}
           </div>
         `;
       }).join('')}
 
-      <div class="goal-form">
+      <div class="goal-form" style="grid-template-columns:1fr 1fr auto">
         <input class="form-input" placeholder="Nom (ex: PC)" id="goal-name" value="${state.goalForm.name}" oninput="state.goalForm.name=this.value"/>
         <input class="form-input" placeholder="Cible" type="number" id="goal-target" value="${state.goalForm.target}" oninput="state.goalForm.target=this.value"/>
         <button class="add-btn" onclick="addGoal()">+</button>
       </div>
+      <input class="form-input" placeholder="📅 Date cible (optionnel)" type="date" id="goal-deadline"
+        value="${state.goalForm.deadline||''}"
+        oninput="state.goalForm.deadline=this.value"
+        style="width:100%;margin-top:8px;background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:10px 12px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;"/>
       <div style="margin-top:6px;font-size:11px;color:var(--muted);font-family:var(--mono)">
         Les entrées alimentent auto l'épargne 🏦
       </div>
@@ -1067,8 +1537,8 @@ function addGoal() {
   const name = state.goalForm.name.trim();
   const target = parseFloat(state.goalForm.target);
   if (!name || !target || target <= 0) { toast('⚠ Remplis les deux champs'); return; }
-  state.goals.push({ name, target, current: 0 });
-  state.goalForm = { name:'', target:'' };
+  state.goals.push({ name, target, current: 0, deadline: state.goalForm.deadline || '' });
+  state.goalForm = { name:'', target:'', deadline:'' };
   save();
   toast('🎯 Objectif ajouté !');
   render();
@@ -1100,16 +1570,18 @@ function renderHistory() {
           <span style="color:var(--muted)">Total du mois</span>
           <span style="font-family:var(--mono);font-weight:700;color:var(--green)">${fmt(monthTotal)}</span>
         </div>
-        ${entries.map((e, gi) => {
+        ${entries.map((e) => {
           const realIdx = state.history.findIndex(h => h.id === e.id);
           return `
             <div class="history-card">
               <div class="history-header">
                 <div>
                   <div class="history-date">${e.date}</div>
+                  ${e.note ? `<div class="history-note-tag">📝 ${e.note}</div>` : ''}
                 </div>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="history-total">${fmt(e.amount)}</div>
+                  <button class="history-delete" onclick="openEditModal(${realIdx})" title="Modifier">✏️</button>
                   <button class="history-delete" onclick="deleteEntry(${realIdx})">🗑</button>
                 </div>
               </div>
@@ -1132,8 +1604,55 @@ function renderHistory() {
 
     <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
       <button class="export-btn" onclick="exportCSV()">📥 Exporter en CSV</button>
+      <button class="export-btn" onclick="exportPDF()" style="background:linear-gradient(135deg,#1a1a2e,#2a1a2a)">📄 Récap PDF du mois</button>
     </div>
   `;
+}
+
+function openEditModal(idx) {
+  const entry = state.history[idx];
+  if (!entry) return;
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `
+    <div class="modal-overlay" onclick="closeModal(event)">
+      <div class="modal-box">
+        <div class="modal-title">
+          Modifier l'entrée
+          <button class="modal-close" onclick="closeModalForce()">✕</button>
+        </div>
+        <div class="modal-field">
+          <label>Montant</label>
+          <input class="modal-input" type="number" id="edit-amount" value="${entry.amount}"/>
+        </div>
+        <div class="modal-field">
+          <label>Note</label>
+          <input class="modal-input" type="text" id="edit-note" value="${entry.note||''}" placeholder="Ajouter une note..."/>
+        </div>
+        <button class="modal-btn" onclick="saveEdit(${idx})">💾 Enregistrer</button>
+      </div>
+    </div>
+  `;
+}
+
+function closeModal(e) {
+  if (e.target.classList.contains('modal-overlay')) closeModalForce();
+}
+function closeModalForce() {
+  document.getElementById('modal-root').innerHTML = '';
+}
+
+function saveEdit(idx) {
+  const amount = parseFloat(document.getElementById('edit-amount').value);
+  const note = document.getElementById('edit-note').value.trim();
+  if (!amount || amount <= 0) { toast('⚠ Montant invalide'); return; }
+  const entry = state.history[idx];
+  entry.amount = amount;
+  entry.note = note;
+  entry.splits = state.categories.map(c => ({ ...c, montant: amount * c.pct / 100, spent: 0 }));
+  save();
+  closeModalForce();
+  toast('✅ Entrée modifiée !');
+  render();
 }
 
 function deleteEntry(i) {
@@ -1144,19 +1663,49 @@ function deleteEntry(i) {
 }
 
 function exportCSV() {
-  const rows = [['Date','Montant','Catégorie','Sous-total']];
+  const rows = [['Date','Note','Montant','Catégorie','Sous-total']];
   state.history.forEach(e => {
     e.splits.forEach(s => {
-      rows.push([e.date, e.amount, s.name, s.montant]);
+      rows.push([e.date, e.note||'', e.amount, s.name, s.montant]);
     });
   });
   const csv = rows.map(r => r.join(';')).join('\n');
-  const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+  const blob = new Blob(['\uFEFF'+csv], { type:'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'budgetsplit_export.csv';
   a.click();
   toast('📥 Export CSV téléchargé !');
+}
+
+function exportPDF() {
+  const now = new Date();
+  const monthKey = now.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
+  const groups = groupByMonth(state.history);
+  const entries = groups[monthKey] || [];
+  if (!entries.length) { toast('⚠ Aucune entrée ce mois'); return; }
+
+  const total = entries.reduce((s,e)=>s+e.amount,0);
+  const cur = CURRENCIES.find(c => c.code === state.currency) || CURRENCIES[0];
+  const fmt2 = v => new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(v) + ' ' + cur.symbol;
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+  <style>body{font-family:Arial,sans-serif;padding:30px;color:#111}
+  h1{color:#6366f1}table{width:100%;border-collapse:collapse;margin-top:16px}
+  th,td{border:1px solid #ddd;padding:8px 12px;font-size:13px}th{background:#f0f0f8}
+  .total{font-weight:bold;color:#34d399}</style></head>
+  <body><h1>💰 BudgetSplit — ${monthKey}</h1>
+  <p>Total reçu : <strong>${fmt2(total)}</strong></p>
+  <table><tr><th>Date</th><th>Note</th><th>Montant</th><th>Catégorie</th><th>Sous-total</th></tr>
+  ${entries.flatMap(e => e.splits.map(s=>`<tr><td>${e.date}</td><td>${e.note||'—'}</td><td>${fmt2(e.amount)}</td><td>${s.emoji} ${s.name}</td><td>${fmt2(s.montant)}</td></tr>`)).join('')}
+  </table></body></html>`;
+
+  const blob = new Blob([html], { type:'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `budgetsplit_${monthKey.replace(' ','_')}.html`;
+  a.click();
+  toast('📄 Récap téléchargé !');
 }
 
 // ── SETTINGS ──
@@ -1196,12 +1745,12 @@ function renderSettings() {
     </div>
 
     <button class="ghost-btn" onclick="resetDefaults()">↺ Réinitialiser les défauts</button>
+    <button class="ghost-btn" onclick="clearAll()" style="color:var(--red);border-color:var(--red)44">🗑 Effacer toutes les données</button>
   `;
 }
 
 function syncSettingPct(i, val) {
   state.categories[i].pct = Number(val);
-  // sync number input
   const inputs = document.querySelectorAll('.setting-pct-input');
   if (inputs[i]) inputs[i].value = val;
   updateTotalPill();
@@ -1232,6 +1781,16 @@ function resetDefaults() {
   render();
 }
 
+function clearAll() {
+  if (!confirm('Effacer TOUTES les données ? Cette action est irréversible.')) return;
+  state.history = [];
+  state.goals = [];
+  state.recurringIncomes = [];
+  save();
+  toast('🗑 Données effacées');
+  render();
+}
+
 // ═══════════════════════════════════════════
 // PWA INSTALL
 // ═══════════════════════════════════════════
@@ -1258,38 +1817,26 @@ document.getElementById('install-close').addEventListener('click', () => {
   document.getElementById('install-banner').style.display = 'none';
 });
 
+// iOS install hint
+const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+const isInStandaloneMode = window.navigator.standalone;
+if (isIos && !isInStandaloneMode && !localStorage.getItem('ios_hint_dismissed')) {
+  const iosBanner = document.createElement('div');
+  iosBanner.style.cssText = `position:fixed;bottom:0;left:0;right:0;background:#15151f;border-top:1px solid #1e1e30;padding:16px 20px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:13px;color:#e8e8f5;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;`;
+  iosBanner.innerHTML = `<span>📲 Installe l'app : appuie sur <strong>⬆ Partager</strong> → <strong>Sur l'écran d'accueil</strong></span><button onclick="this.parentElement.remove();localStorage.setItem('ios_hint_dismissed','1')" style="background:none;border:none;color:#5a5a7a;font-size:20px;cursor:pointer">✕</button>`;
+  document.body.appendChild(iosBanner);
+}
+
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
 render();
 
-// Register service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
 }
-
-// iOS install hint
-const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-const isInStandaloneMode = window.navigator.standalone;
-if (isIos && !isInStandaloneMode) {
-  const iosBanner = document.createElement('div');
-  iosBanner.style.cssText = `
-    position:fixed; bottom:0; left:0; right:0;
-    background:#15151f; border-top:1px solid #1e1e30;
-    padding:16px 20px; text-align:center;
-    font-family:'Space Grotesk',sans-serif; font-size:13px;
-    color:#e8e8f5; z-index:9999; display:flex;
-    align-items:center; justify-content:space-between; gap:12px;
-  `;
-  iosBanner.innerHTML = `
-    <span>📲 Pour installer : appuie sur <strong>⬆ Partager</strong> → <strong>Sur l'écran d'accueil</strong></span>
-    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#5a5a7a;font-size:20px;cursor:pointer">✕</button>
-  `;
-  document.body.appendChild(iosBanner);
-}
 </script>
-
 </body>
 </html>
