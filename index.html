@@ -14,36 +14,41 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
-  :root {
-    --bg: #080810;
-    --surface: #0f0f1a;
-    --surface2: #15151f;
-    --border: #1e1e30;
-    --border2: #252538;
-    --text: #e8e8f5;
-    --muted: #5a5a7a;
-    --accent: #6366f1;
-    --accent2: #818cf8;
-    --green: #34d399;
-    --yellow: #fbbf24;
-    --red: #f87171;
-    --pink: #f472b6;
-    --blue: #60a5fa;
-    --orange: #fb923c;
-    --font: 'Space Grotesk', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-  }
+:root {
+  --bg: #080810;
+  --surface: #0f0f1a;
+  --surface2: #15151f;
+  --border: #1e1e30;
+  --border2: #252538;
+  --text: #e8e8f5;
+  --muted: #5a5a7a;
+  --accent: #6366f1;
+  --accent2: #818cf8;
+  --green: #34d399;
+  --yellow: #fbbf24;
+  --red: #f87171;
+  --pink: #f472b6;
+  --blue: #60a5fa;
+  --orange: #fb923c;
+  --font: 'Space Grotesk', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
 
   /* LIGHT MODE */
   body.light {
-    --bg: #f0f0f8;
-    --surface: #ffffff;
-    --surface2: #e8e8f5;
-    --border: #d0d0e8;
-    --border2: #c0c0d8;
-    --text: #18182a;
-    --muted: #8888aa;
-  }
+  --bg: #f7f7ff;
+  --surface: #ffffff;
+  --surface2: #ededfa;
+  --border: #d4d4f0;
+  --border2: #c0c0e0;
+  --text: #12121e;
+  --muted: #7070a0;
+  --accent: #4f46e5;
+  --accent2: #6366f1;
+  --green: #059669;
+  --yellow: #d97706;
+  --red: #dc2626;
+} 
 
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
@@ -109,8 +114,9 @@
   }
 
   body.light .header-title {
-    background: linear-gradient(135deg, #18182a 0%, #6366f1 100%);
+    background: linear-gradient(135deg, #12121e 0%, #4f46e5 100%);
     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
@@ -234,9 +240,9 @@
   }
 
   body.light .currency-badge {
-    background: var(--surface2);
-    border-color: var(--border);
-    color: var(--accent);
+    background: #ededfa;
+    border-color: #c0c0e0;
+    color: #4f46e5;
   }
 
   .submit-btn {
@@ -1815,16 +1821,21 @@ document.getElementById('install-go').addEventListener('click', async () => {
 
 document.getElementById('install-close').addEventListener('click', () => {
   document.getElementById('install-banner').style.display = 'none';
+  localStorage.setItem('install_dismissed', '1');
 });
 
-// iOS install hint
+// Android : ne pas réafficher si déjà dismissé
+if (localStorage.getItem('install_dismissed')) {
+  document.getElementById('install-banner').style.display = 'none';
+}
+
+// iOS
 const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
 const isInStandaloneMode = window.navigator.standalone;
 if (isIos && !isInStandaloneMode && !localStorage.getItem('ios_hint_dismissed')) {
-  const iosBanner = document.createElement('div');
-  iosBanner.style.cssText = `position:fixed;bottom:0;left:0;right:0;background:#15151f;border-top:1px solid #1e1e30;padding:16px 20px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:13px;color:#e8e8f5;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;`;
-  iosBanner.innerHTML = `<span>📲 Installe l'app : appuie sur <strong>⬆ Partager</strong> → <strong>Sur l'écran d'accueil</strong></span><button onclick="this.parentElement.remove();localStorage.setItem('ios_hint_dismissed','1')" style="background:none;border:none;color:#5a5a7a;font-size:20px;cursor:pointer">✕</button>`;
-  document.body.appendChild(iosBanner);
+  document.getElementById('install-banner').style.display = 'flex';
+  document.getElementById('install-banner').querySelector('.inst-text').textContent = '📲 Appuie sur ⬆ Partager → Sur l\'écran d\'accueil';
+  document.getElementById('install-go').style.display = 'none';
 }
 
 // ═══════════════════════════════════════════
