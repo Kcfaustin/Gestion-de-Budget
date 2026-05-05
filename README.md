@@ -25,6 +25,16 @@ Application web/PWA simple.
 5. Ne rien mettre dans Build Command ni dans Output Directory.
 6. Cliquer sur Deploy.
 
+
+## Mise à Jour
+
+Dans sw.js actuel :
+jsconst CACHE = 'budgetsplit-v1';
+
+À chaque fois que tu fais une mise à jour, change juste le numéro :
+
+jsconst CACHE = 'budgetsplit-v2'; // v3, v4...
+
 ## Notes
 
 - Eviter d'ouvrir index.html en double-clic pour tester la PWA.
