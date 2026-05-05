@@ -297,7 +297,8 @@ body.light {
     cursor: pointer;
     transition: all 0.2s;
     margin-top: 10px;
-    color: var(--text);  /* ← ajoute ça */
+    color: #e8e8f5; /* fallback direct */
+    color: var(--text);
   }
   .recurring-chip.active {
     background: rgba(99,102,241,0.15);
@@ -1005,6 +1006,20 @@ body.light {
 
   .scroll-hidden::-webkit-scrollbar { display: none; }
   .scroll-hidden { scrollbar-width: none; }
+
+
+@media (max-width: 360px) {
+  .main-input { font-size: 20px; padding: 12px 60px 12px 12px; }
+  .split-money { font-size: 13px; }
+  .tab-btn { font-size: 10px; }
+  .tab-icon { font-size: 16px; }
+  .header-title { font-size: 22px; }
+  .card { padding: 14px; }
+}
+
+@media (min-width: 481px) {
+  #app { border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+}
 </style>
 </head>
 <body>
@@ -1857,9 +1872,9 @@ document.getElementById('install-close').addEventListener('click', () => {
 });
 
 // Android : ne pas réafficher si déjà dismissé
-if (localStorage.getItem('install_dismissed')) {
-  document.getElementById('install-banner').style.display = 'none';
-}
+// if (localStorage.getItem('install_dismissed')) {
+//   document.getElementById('install-banner').style.display = 'none';
+// }
 
 // iOS
 const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
