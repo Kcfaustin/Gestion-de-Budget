@@ -1,4 +1,4 @@
-const CACHE = 'budgetsplit-v3.4';
+const CACHE = 'budgetsplit-v3.5';
 const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.svg'];
 
 self.addEventListener('install', e => {

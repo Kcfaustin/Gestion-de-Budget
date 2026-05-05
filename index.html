@@ -849,26 +849,28 @@ body.light {
 
   .add-btn:active { transform: scale(0.9); }
 
-  .export-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #1a2a1a, #1a1a2a);
-    border: 1px solid var(--border2);
-    border-radius: 12px;
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-bottom: 10px;
-  }
+.export-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
 
-  .export-btn:hover { border-color: var(--accent); }
+.export-btn:hover {
+  border-color: var(--accent);
+}
 
   #install-banner {
     position: fixed;
